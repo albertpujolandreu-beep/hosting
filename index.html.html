@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Taula periòdica interactiva (català)</title>
+<style>
+:root{
+--c-metall:#ffe4b3;
+--c-no-metall:#cce5ff;
+--c-metaloide:#d4f4dd;
+--c-borde:#9aa1a8;
+}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Noto Sans',sans-serif; margin:24px; color:#111}
+h1{margin:0 0 10px; text-align:center}
+p.desc{margin:0 0 20px; text-align:center; color:#555}
+.wrap{max-width:1200px; margin:0 auto}
+.legend{display:flex; gap:10px; justify-content:center; margin:0 0 14px}
+.chip{display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border:1px solid var(--c-borde); border-radius:999px; font-size:12px; background:#fff}
+.dot{width:12px; height:12px; border-radius:50%}
+.grid{
+display:grid;
+grid-template-columns: repeat(18, 52px);
+grid-template-rows: repeat(10, 52px);
+gap:6px;
+justify-content:center;
+margin:16px auto;
+}
+.cell{
+position:relative; border:1px solid var(--c-borde); border-radius:10px; padding:6px; cursor:pointer;
+display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start; background:#fff;
+transition:transform .06s ease, box-shadow .1s ease, border-color .1s ease;
+overflow:hidden;
+}
+.cell:hover{transform:translateY(-1px); box-shadow:0 3px 10px rgba(0,0,0,.08); border-color:#666}
+.num{font-size:10px; color:#444; line-height:1}
+.sym{font-weight:700; font-size:16px; line-height:1.1; margin-top:2px}
+.nam{font-size:10px; color:#222; margin-top:2px; line-height:1.05}
+.metall{background:var(--c-metall)}
+.no-metall{background:var(--c-no-metall)}
+.metaloide{background:var(--c-metaloide)}
+.muted{opacity:.22}
+.panel{max-width:1200px; margin:18px auto; display:grid; grid-template-columns: 1fr 320px; gap:16px;}
+@media (max-width: 980px){
+.grid{transform:scale(.92); transform-origin:top center}
+.panel{grid-template-columns:1fr}
+}
+.detail{border:1px solid var(--c-borde); border-radius:12px; padding:14px; background:#f8f9fa; min-height:120px;}
+.detail h3{margin:0 0 6px}
+.detail .line{margin:2px 0; font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Taula periòdica interactiva</h1>
+<p class="desc">Distribució real per grups (1–18) i períodes (1–7). Fes clic sobre un element per veure’n el detall.</p>
+<div class="legend">
+<span class="chip"><span class="dot" style="background:var(--c-metall)"></span> Metall</span>
+<span class="chip"><span class="dot" style="background:var(--c-no-metall)"></span> No metall</span>
+<span class="chip"><span class="dot" style="background:var(--c-metaloide)"></span> Metaloide</span>
+</div>
+
+
+<div id="grid" class="grid" aria-label="Taula periòdica"></div>
+
+
+<div class="panel">
+<div id="detail" class="detail" aria-live="polite">
+</div>
+
+<script>
+  /* ====== DADES DELS ELEMENTS ====== */
+const E = [
+  {z:1, sym:"H", name:"Hidrogen", kind:"no-metall", x:1, y:1, meltC:-259, boilC:-253, mass:1.008, group:"No metall"},
+  {z:2, sym:"He", name:"Heli", kind:"no-metall", x:18, y:1, meltC:-272, boilC:-269, mass:4.0026, group:"Gas noble"},
+  {z:3, sym:"Li", name:"Liti", kind:"metall", x:1, y:2, meltC:180, boilC:1342, mass:6.94, group:"Metall alcalí"},
+  {z:4, sym:"Be", name:"Beril·li", kind:"metall", x:2, y:2, meltC:1287, boilC:2469, mass:9.0122, group:"Alcalinoterri"},
+  {z:5, sym:"B", name:"Bor", kind:"metaloide", x:13, y:2, meltC:2076, boilC:3927, mass:10.81, group:"Terreoides"},
+  {z:6, sym:"C", name:"Carboni", kind:"no-metall", x:14, y:2, meltC:3550, boilC:4827, mass:12.011, group:"Carbonoides"},
+  {z:7, sym:"N", name:"Nitrogen", kind:"no-metall", x:15, y:2, meltC:-210, boilC:-196, mass:14.007, group:"Pnictògens"},
+  {z:8, sym:"O", name:"Oxigen", kind:"no-metall", x:16, y:2, meltC:-218, boilC:-183, mass:15.999, group:"Calcogen"},
+  {z:9, sym:"F", name:"Fluor", kind:"no-metall", x:17, y:2, meltC:-220, boilC:-188, mass:18.998, group:"Halogen"},
+  {z:10, sym:"Ne", name:"Neó", kind:"no-metall", x:18, y:2, meltC:-249, boilC:-246, mass:20.180, group:"Gas noble"},
+  {z:11, sym:"Na", name:"Sodi", kind:"metall", x:1, y:3, meltC:98, boilC:883, mass:22.990, group:"Metall alcalí"},
+  {z:12, sym:"Mg", name:"Magnesi", kind:"metall", x:2, y:3, meltC:650, boilC:1090, mass:24.305, group:"Alcalinoterri"},
+  {z:13, sym:"Al", name:"Alumini", kind:"metall", x:13, y:3, meltC:660, boilC:2519, mass:26.982, group:"Terreoides"},
+  {z:14, sym:"Si", name:"Silici", kind:"metaloide", x:14, y:3, meltC:1414, boilC:2900, mass:28.085, group:"Carbonoides"},
+  {z:15, sym:"P", name:"Fòsfor", kind:"no-metall", x:15, y:3, meltC:44, boilC:280, mass:30.974, group:"Pnictògens"},
+  {z:16, sym:"S", name:"Sofre", kind:"no-metall", x:16, y:3, meltC:115, boilC:445, mass:32.06, group:"Calcogen"},
+  {z:17, sym:"Cl", name:"Clor", kind:"no-metall", x:17, y:3, meltC:-101, boilC:-35, mass:35.45, group:"Halogen"},
+  {z:18, sym:"Ar", name:"Argó", kind:"no-metall", x:18, y:3, meltC:-189, boilC:-186, mass:39.948, group:"Gas noble"},
+  {z:19, sym:"K", name:"Potassi", kind:"metall", x:1, y:4, meltC:64, boilC:759, mass:39.098, group:"Metall alcalí"},
+  {z:20, sym:"Ca", name:"Calci", kind:"metall", x:2, y:4, meltC:842, boilC:1484, mass:40.078, group:"Alcalinoterri"},
+  {z:21, sym:"Sc", name:"Escandi", kind:"metall", x:3, y:4, meltC:1541, boilC:2836, mass:44.956, group:"Metall de transició"},
+  {z:22, sym:"Ti", name:"Titani", kind:"metall", x:4, y:4, meltC:1668, boilC:3287, mass:47.867, group:"Metall de transició"},
+  {z:23, sym:"V", name:"Vanadi", kind:"metall", x:5, y:4, meltC:1910, boilC:3407, mass:50.942, group:"Metall de transició"},
+  {z:24, sym:"Cr", name:"Crom", kind:"metall", x:6, y:4, meltC:1907, boilC:2671, mass:51.996, group:"Metall de transició"},
+  {z:25, sym:"Mn", name:"Manganès", kind:"metall", x:7, y:4, meltC:1246, boilC:2061, mass:54.938, group:"Metall de transició"},
+  {z:26, sym:"Fe", name:"Ferro", kind:"metall", x:8, y:4, meltC:1538, boilC:2862, mass:55.845, group:"Metall de transició"},
+  {z:27, sym:"Co", name:"Cobalt", kind:"metall", x:9, y:4, meltC:1495, boilC:2927, mass:58.933, group:"Metall de transició"},
+  {z:28, sym:"Ni", name:"Níquel", kind:"metall", x:10, y:4, meltC:1455, boilC:2913, mass:58.693, group:"Metall de transició"},
+  {z:29, sym:"Cu", name:"Coure", kind:"metall", x:11, y:4, meltC:1085, boilC:2562, mass:63.546, group:"Metall de transició"},
+  {z:30, sym:"Zn", name:"Zinc", kind:"metall", x:12, y:4, meltC:420, boilC:907, mass:65.38, group:"Metall de transició"},
+  {z:31, sym:"Ga", name:"Gal·li", kind:"metall", x:13, y:4, meltC:30, boilC:2204, mass:69.723, group:"Terreoides"},
+  {z:32, sym:"Ge", name:"Germani", kind:"metaloide", x:14, y:4, meltC:938, boilC:2833, mass:72.630, group:"Carbonoides"},
+  {z:33, sym:"As", name:"Arsènic", kind:"metaloide", x:15, y:4, meltC:817, boilC:614, mass:74.922, group:"Pnictògens"},
+  {z:34, sym:"Se", name:"Seleni", kind:"no-metall", x:16, y:4, meltC:221, boilC:685, mass:78.971, group:"Calcogen"},
+  {z:35, sym:"Br", name:"Brom", kind:"no-metall", x:17, y:4, meltC:-7, boilC:59, mass:79.904, group:"Halogen"},
+  {z:36, sym:"Kr", name:"Criptó", kind:"no-metall", x:18, y:4, meltC:-157, boilC:-153, mass:83.798, group:"Gas noble"},
+  {z:37, sym:"Rb", name:"Rubidi", kind:"metall", x:1, y:5, meltC:39, boilC:688, mass:85.468, group:"Metall alcalí"},
+  {z:38, sym:"Sr", name:"Estronci", kind:"metall", x:2, y:5, meltC:777, boilC:1382, mass:87.62, group:"Alcalinoterri"},
+  {z:39, sym:"Y", name:"Itri", kind:"metall", x:3, y:5, meltC:1526, boilC:3338, mass:88.906, group:"Metall de transició"},
+  {z:40, sym:"Zr", name:"Zircòni", kind:"metall", x:4, y:5, meltC:1855, boilC:4409, mass:91.224, group:"Metall de transició"},
+  {z:41, sym:"Nb", name:"Niobi", kind:"metall", x:5, y:5, meltC:2477, boilC:4744, mass:92.906, group:"Metall de transició"},
+  {z:42, sym:"Mo", name:"Molibdè", kind:"metall", x:6, y:5, meltC:2623, boilC:4639, mass:95.95, group:"Metall de transició"},
+  {z:43, sym:"Tc", name:"Tecneci", kind:"metall", x:7, y:5, meltC:2157, boilC:4265, mass:98, group:"Metall de transició"},
+  {z:44, sym:"Ru", name:"Ruteni", kind:"metall", x:8, y:5, meltC:2334, boilC:4150, mass:101.07, group:"Metall de transició"},
+  {z:45, sym:"Rh", name:"Rodi", kind:"metall", x:9, y:5, meltC:1964, boilC:3695, mass:102.91, group:"Metall de transició"},
+  {z:46, sym:"Pd", name:"Pal·ladi", kind:"metall", x:10, y:5, meltC:1555, boilC:2963, mass:106.42, group:"Metall de transició"},
+  {z:47, sym:"Ag", name:"Plata", kind:"metall", x:11, y:5, meltC:962, boilC:2162, mass:107.87, group:"Metall de transició"},
+  {z:48, sym:"Cd", name:"Cadmi", kind:"metall", x:12, y:5, meltC:321, boilC:767, mass:112.41, group:"Metall de transició"},
+  {z:49, sym:"In", name:"Indi", kind:"metall", x:13, y:5, meltC:157, boilC:2072, mass:114.82, group:"Terreoides"},
+  {z:50, sym:"Sn", name:"Estany", kind:"metall", x:14, y:5, meltC:232, boilC:2602, mass:118.71, group:"Carbonoides"},
+  {z:51, sym:"Sb", name:"Antimoni", kind:"metaloide", x:15, y:5, meltC:631, boilC:1587, mass:121.76, group:"Pnictògens"},
+  {z:52, sym:"Te", name:"Tel·luri", kind:"metaloide", x:16, y:5, meltC:449, boilC:988, mass:127.60, group:"Calcogen"},
+  {z:53, sym:"I", name:"Iode", kind:"no-metall", x:17, y:5, meltC:114, boilC:184, mass:126.90, group:"Halogen"},
+  {z:54, sym:"Xe", name:"Xenó", kind:"no-metall", x:18, y:5, meltC:-112, boilC:-108, mass:131.29, group:"Gas noble"},
+  {z:55, sym:"Cs", name:"Cesi", kind:"metall", x:1, y:6, meltC:29, boilC:671, mass:132.91, group:"Metall alcalí"},
+  {z:56, sym:"Ba", name:"Bari", kind:"metall", x:2, y:6, meltC:727, boilC:1870, mass:137.33, group:"Alcalinoterri"},
+
+  /* Lantànids (fila separada, y=9, x=4..17) */
+  {z:57, sym:"La", name:"Lantani", kind:"metall", x:4, y:8, meltC:920, boilC:3464, mass:138.91, group:"Lantànid"},
+  {z:58, sym:"Ce", name:"Ceri", kind:"metall", x:5, y:8, meltC:798, boilC:3443, mass:140.12, group:"Lantànid"},
+  {z:59, sym:"Pr", name:"Praseodimi", kind:"metall", x:6, y:8, meltC:935, boilC:3290, mass:140.91, group:"Lantànid"},
+  {z:60, sym:"Nd", name:"Neodimi", kind:"metall", x:7, y:8, meltC:1021, boilC:3074, mass:144.24, group:"Lantànid"},
+  {z:61, sym:"Pm", name:"Prometi", kind:"metall", x:8, y:8, meltC:1100, boilC:3000, mass:145, group:"Lantànid"},
+  {z:62, sym:"Sm", name:"Samari", kind:"metall", x:9, y:8, meltC:1072, boilC:1794, mass:150.36, group:"Lantànid"},
+  {z:63, sym:"Eu", name:"Europi", kind:"metall", x:10, y:8, meltC:826, boilC:1529, mass:151.96, group:"Lantànid"},
+  {z:64, sym:"Gd", name:"Gadolini", kind:"metall", x:11, y:8, meltC:1312, boilC:3273, mass:157.25, group:"Lantànid"},
+  {z:65, sym:"Tb", name:"Terbi", kind:"metall", x:12, y:8, meltC:1356, boilC:3230, mass:158.93, group:"Lantànid"},
+  {z:66, sym:"Dy", name:"Disprosi", kind:"metall", x:13, y:8, meltC:1412, boilC:2567, mass:162.50, group:"Lantànid"},
+  {z:67, sym:"Ho", name:"Holmi", kind:"metall", x:14, y:8, meltC:1474, boilC:2700, mass:164.93, group:"Lantànid"},
+  {z:68, sym:"Er", name:"Erbi", kind:"metall", x:15, y:8, meltC:1529, boilC:2868, mass:167.26, group:"Lantànid"},
+  {z:69, sym:"Tm", name:"Tuli", kind:"metall", x:16, y:8, meltC:1545, boilC:1950, mass:168.93, group:"Lantànid"},
+  {z:70, sym:"Yb", name:"Iterbi", kind:"metall", x:17, y:8, meltC:824, boilC:1196, mass:173.05, group:"Lantànid"},
+  {z:71, sym:"Lu", name:"Luteci", kind:"metall", x:18, y:8, meltC:1663, boilC:3402, mass:174.97, group:"Lantànid"},
+
+
+  {z:72, sym:"Hf", name:"Hafni", kind:"metall", x:4, y:6, meltC:2233, boilC:4603, mass:178.49, group:"Metall de transició"},
+  {z:73, sym:"Ta", name:"Tàntal", kind:"metall", x:5, y:6, meltC:3017, boilC:5458, mass:180.95, group:"Metall de transició"},
+  {z:74, sym:"W", name:"Tungstè", kind:"metall", x:6, y:6, meltC:3422, boilC:5555, mass:183.84, group:"Metall de transició"},
+  {z:75, sym:"Re", name:"Reni", kind:"metall", x:7, y:6, meltC:3186, boilC:5596, mass:186.21, group:"Metall de transició"},
+  {z:76, sym:"Os", name:"Òsmi", kind:"metall", x:8, y:6, meltC:3033, boilC:5012, mass:190.23, group:"Metall de transició"},
+  {z:77, sym:"Ir", name:"Iridi", kind:"metall", x:9, y:6, meltC:2446, boilC:4428, mass:192.22, group:"Metall de transició"},
+  {z:78, sym:"Pt", name:"Platina", kind:"metall", x:10, y:6, meltC:1768, boilC:3825, mass:195.08, group:"Metall de transició"},
+  {z:79, sym:"Au", name:"Or", kind:"metall", x:11, y:6, meltC:1064, boilC:2856, mass:196.97, group:"Metall de transició"},
+  {z:80, sym:"Hg", name:"Mercuri", kind:"metall", x:12, y:6, meltC:-39, boilC:357, mass:200.59, group:"Metall de transició"},
+  {z:81, sym:"Tl", name:"Tal·li", kind:"metall", x:13, y:6, meltC:304, boilC:1473, mass:204.38, group:"Terreoides"},
+  {z:82, sym:"Pb", name:"Plom", kind:"metall", x:14, y:6, meltC:327.5, boilC:1749, mass:207.2, group:"Carbonoides"},
+  {z:83, sym:"Bi", name:"Bismut", kind:"metall", x:15, y:6, meltC:271.4, boilC:1564, mass:208.98, group:"Pnictògens"},
+  {z:84, sym:"Po", name:"Poloni", kind:"metaloide", x:16, y:6, meltC:254, boilC:962, mass:209, group:"Calcogen"},
+  {z:85, sym:"At", name:"Astats", kind:"metaloide", x:17, y:6, meltC:302, boilC:337, mass:210, group:"Halogen"},
+  {z:86, sym:"Rn", name:"Radó", kind:"no-metall", x:18, y:6, meltC:-71, boilC:-62, mass:222, group:"Gas noble"},
+  {z:87, sym:"Fr", name:"Franci", kind:"metall", x:1, y:7, meltC:27, boilC:677, mass:223, group:"Metall alcalí"},
+  {z:88, sym:"Ra", name:"Radi", kind:"metall", x:2, y:7, meltC:700, boilC:1737, mass:226, group:"Alcalinoterri"},
+  {z:89, sym:"Ac", name:"Actini", kind:"metall", x:4, y:9, meltC:1050, boilC:3200, mass:227, group:"Actínid"},
+  {z:104, sym:"Rf", name:"Rutherfordi", kind:"metall", x:4, y:7, meltC:null, boilC:null, mass:267, group:"Metall de transició"},
+  {z:105, sym:"Db", name:"Dubni", kind:"metall", x:5, y:7, meltC:null, boilC:null, mass:268, group:"Metall de transició"},
+  {z:106, sym:"Sg", name:"Seaborgi", kind:"metall", x:6, y:7, meltC:null, boilC:null, mass:269, group:"Metall de transició"},
+  {z:107, sym:"Bh", name:"Bohri", kind:"metall", x:7, y:7, meltC:null, boilC:null, mass:270, group:"Metall de transició"},
+  {z:108, sym:"Hs", name:"Hassi", kind:"metall", x:8, y:7, meltC:null, boilC:null, mass:277, group:"Metall de transició"},
+  {z:109, sym:"Mt", name:"Meitneri", kind:"metall", x:9, y:7, meltC:null, boilC:null, mass:278, group:"Metall de transició"},
+  {z:110, sym:"Ds", name:"Darmstadti", kind:"metall", x:10, y:7, meltC:null, boilC:null, mass:281, group:"Metall de transició"},
+  {z:111, sym:"Rg", name:"Roentgenci", kind:"metall", x:11, y:7, meltC:null, boilC:null, mass:282, group:"Metall de transició"},
+  {z:112, sym:"Cn", name:"Copernici", kind:"metall", x:12, y:7, meltC:null, boilC:null, mass:285, group:"Metall de transició"},
+  {z:113, sym:"Nh", name:"Nihoni", kind:"metall", x:13, y:7, meltC:null, boilC:null, mass:286, group:"Terreoides"},
+  {z:114, sym:"Fl", name:"Flerovi", kind:"metall", x:14, y:7, meltC:null, boilC:null, mass:289, group:"Carbonoides"},
+  {z:115, sym:"Mc", name:"Moscovi", kind:"metall", x:15, y:7, meltC:null, boilC:null, mass:290, group:"Pnictògens"},
+  {z:116, sym:"Lv", name:"Livermori", kind:"metall", x:16, y:7, meltC:null, boilC:null, mass:293, group:"Calcogen"},
+  {z:117, sym:"Ts", name:"Tenessí", kind:"no-metall", x:17, y:7, meltC:null, boilC:null, mass:294, group:"Halogen"},
+  {z:118, sym:"Og", name:"Oganessó", kind:"no-metall", x:18, y:7, meltC:null, boilC:null, mass:294, group:"Gas noble"},
+
+  /* Actínids (fila separada, y=10, x=4..17) */
+  {z:89, sym:"Ac", name:"Actini", kind:"metall", x:4, y:9, meltC:1050, boilC:3200, mass:227, group:"Actínid"},
+  {z:90, sym:"Th", name:"Tori", kind:"metall", x:5, y:9, meltC:1750, boilC:4788, mass:232.04, group:"Actínid"},
+  {z:91, sym:"Pa", name:"Protactini", kind:"metall", x:6, y:9, meltC:1572, boilC:4000, mass:231.04, group:"Actínid"},
+  {z:92, sym:"U",  name:"Urani", kind:"metall", x:7, y:9, meltC:1132, boilC:4131, mass:238.03, group:"Actínid"},
+  {z:93, sym:"Np", name:"Neptuni", kind:"metall", x:8, y:9, meltC:640, boilC:3902, mass:237, group:"Actínid"},
+  {z:94, sym:"Pu", name:"Plutoni", kind:"metall", x:9, y:9, meltC:640, boilC:3230, mass:244, group:"Actínid"},
+  {z:95, sym:"Am", name:"Americi", kind:"metall", x:10, y:9, meltC:1176, boilC:2607, mass:243, group:"Actínid"},
+  {z:96, sym:"Cm", name:"Curi", kind:"metall", x:11, y:9, meltC:1340, boilC:3100, mass:247, group:"Actínid"},
+  {z:97, sym:"Bk", name:"Berkeli", kind:"metall", x:12, y:9, meltC:986, boilC:2627, mass:247, group:"Actínid"},
+  {z:98, sym:"Cf", name:"Californi", kind:"metall", x:13, y:9, meltC:900, boilC:1470, mass:251, group:"Actínid"},
+  {z:99, sym:"Es", name:"Einsteini", kind:"metall", x:14, y:9, meltC:860, boilC:996, mass:252, group:"Actínid"},
+  {z:100, sym:"Fm", name:"Fermi", kind:"metall", x:15, y:9, meltC:null, boilC:null, mass:257, group:"Actínid"},
+  {z:101, sym:"Md", name:"Mendeleev", kind:"metall", x:16, y:9, meltC:null, boilC:null, mass:258, group:"Actínid"},
+  {z:102, sym:"No", name:"Nobeli", kind:"metall", x:17, y:9, meltC:null, boilC:null, mass:259, group:"Actínid"},
+  {z:103, sym:"Lr", name:"Lawrenci", kind:"metall", x:18, y:9, meltC:null, boilC:null, mass:266, group:"Actínid"}
+];
+/* -------- renderització de la graella -------- */
+const grid = document.getElementById("grid");
+const detail = document.getElementById("detail");
+
+function render(){
+  for(const el of E){
+    const c = document.createElement("div");
+    c.className = "cell";
+    if(el.kind==="metall") c.classList.add("metall");
+    else if(el.kind==="no-metall") c.classList.add("no-metall");
+    else if(el.kind==="metaloide") c.classList.add("metaloide");
+
+    c.style.gridColumn = el.x;
+    c.style.gridRow = el.y;
+    c.innerHTML = `
+      <div class="num">${el.z}</div>
+      <div class="sym">${el.sym}</div>
+      <div class="nam">${el.name}</div>
+    `;
+    c.onclick = ()=> showDetail(el);
+    grid.appendChild(c);
+  }
+}
+
+function showDetail(el){
+  detail.innerHTML = `
+    <h3>${el.name} (<span class="kbd">${el.sym}</span>)</h3>
+    <div class="line"><strong>Número atòmic:</strong> ${el.z}</div>
+    <div class="line"><strong>Tipus:</strong> ${el.kind}</div>
+    <div class="line"><strong>Grup:</strong> ${el.group||"-"}</div>
+    <div class="line"><strong>Massa atòmica:</strong> ${el.mass||"–"}</div>
+    <div class="line"><strong>Punt de fusió:</strong> ${el.meltC!==null? el.meltC+" °C" : "–"}</div>
+    <div class="line"><strong>Punt d’ebullició:</strong> ${el.boilC!==null? el.boilC+" °C" : "–"}</div>
+  `;
+}
+
+render();
+</script>
+<p style="text-align:center; font-size:12px; color:#666; margin-top:10px;">Alguns elements no mostren punt de fusió i ebullició perquè són tan inestables i radioactius que no duren prou per poder mesurar-los.</p>
+<a href="taula 2.html" target="_blank">
+  Teoria dels experiments
+</a>
+</body>
+</html>
