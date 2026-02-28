@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teoria dels experiments</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fa; /* fons clar tipus taula periòdica */
+      color: #1f2933;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    nav {
+      background: #eef2f7;
+      padding: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      color: #111827;
+      font-size: 0.9rem;
+    }
+
+    nav a:hover {
+      background: #e0e7ff;
+    }
+
+    section {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #ffffff;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    section h2 {
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 0.5rem;
+    }
+
+    .media {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #f9fafb;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+.flames-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.flames-container figure {
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.flames-container img {
+  width: 100%;
+  height: 200px;          /* alçada fixa per a totes */
+  object-fit: cover;      /* retalla sense deformar */
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.flames-container figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: #374151;
+}
+</style>
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Teoria dels experiments</h1>
+  <p>Resum teòric, resultats i vídeos dels experiments de laboratori</p>
+</header>
+
+<nav>
+  <a href="#exp1">Prova de flama</a>
+  <a href="#exp2">Sèrie de reactivitat</a>
+  <a href="#exp3">Conductivitat</a>
+  <a href="#exp4">Metalls i àcids</a>
+  <a href="#exp5">Halògens</a>
+  <a href="#exp6">Carbonats</a>
+</nav>
+
+<section id="exp1">
+  <h2>1. Prova de flama</h2>
+
+  <h3>Fonaments Teòrics</h3>
+  <ul>
+    <li>La prova de flama es basa en el fenomen de l’<strong>emissió atòmica</strong>.</li>
+    <li>Quan una sal metàl·lica s’escalfa, els electrons dels àtoms o ions
+        <strong>absorbeixen energia</strong> i passen a nivells d’energia superiors.</li>
+    <li>En tornar a l’estat inicial, els electrons <strong>alliberen energia en forma de llum visible</strong>.</li>
+    <li>Cada element emet un <strong>color característic</strong> perquè té una estructura electrònica pròpia.</li>
+  </ul>
+
+  <h3>Relació amb la taula periòdica</h3>
+  <ul>
+    <li>Els colors observats depenen de la <strong>configuració electrònica</strong> i de la posició
+        de l’element a la taula periòdica.</li>
+    <li><strong>Metalls alcalins (grup 1)</strong>:
+      <ul>
+        <li>Tenen un sol electró de valència.</li>
+        <li>S’exciten fàcilment.</li>
+        <li>Produeixen colors molt intensos (exemple: groc del sodi).</li>
+      </ul>
+    </li>
+    <li><strong>Metalls alcalinoterris (grup 2)</strong>:
+      <ul>
+        <li>Tenen dos electrons de valència.</li>
+        <li>Necessiten més energia per excitar-se.</li>
+        <li>Els colors solen ser més suaus.</li>
+      </ul>
+    </li>
+    <li><strong>Metalls de transició</strong>:
+      <ul>
+        <li>Tenen orbitals d parcialment ocupats.</li>
+        <li>Produeixen emissions més complexes.</li>
+        <li>Colors habituals verds o blavosos (exemple: coure).</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Resultats observats</h3>
+  <ul>
+    <li><strong>Li⁺ (LiCl):</strong> vermell carmí o magenta (no realitzat al laboratori)</li>
+    <li><strong>Na⁺ (NaCl):</strong> groc intens</li>
+    <li><strong>K⁺ (KCl):</strong> lila o violeta</li>
+    <li><strong>Ca²⁺ (CaCl₂):</strong> taronja</li>
+    <li><strong>Ba²⁺ (BaCl₂):</strong> verd groguenc (no realitzat al laboratori)</li>
+    <li><strong>Cu²⁺ (CuSO₄):</strong> blau verdós o turquesa</li>
+  </ul>
+
+  <p>
+    Cada color confirma que cada element té un <strong>patró d’emissió propi</strong>
+    relacionat amb la seva estructura electrònica.
+  </p>
+<div class="flames-container">
+  <figure>
+    <img src="sodi.png" alt="Flama de sodi">
+    <figcaption><strong>Sodi (Na⁺)</strong> – flama groga intensa</figcaption>
+  </figure>
+
+  <figure>
+    <img src="potassi.png" alt="Flama de potassi">
+    <figcaption><strong>Potassi (K⁺)</strong> – flama lila o violeta (el color taronja és format per culpa del ambient del laboratori, s'ha de mirar el contorn exterior de la flama)</figcaption>
+  </figure>
+
+  <figure>
+    <img src="calci.png" alt="Flama de calci">
+    <figcaption><strong>Calci (Ca²⁺)</strong> – flama taronja</figcaption>
+  </figure>
+
+  <figure>
+    <img src="coure.png" alt="Flama de coure">
+    <figcaption><strong>Coure (Cu²⁺)</strong> – flama blau verdosa</figcaption>
+  </figure>
+</div>
+</section>
+
+<section id="exp2">
+  <h2>2. Sèrie de reactivitat dels metalls</h2>
+<section id="exp2">
+  <h2>2. Sèrie de reactivitat dels metalls</h2>
+
+  <h3>Fonaments Teòrics</h3>
+  <ul>
+    <li>Els metalls tendeixen a <strong>perdre electrons</strong> i formar ions positius,
+        propietat anomenada <strong>caràcter metàl·lic</strong>.</li>
+    <li>Aquesta propietat depèn de l’<strong>energia d’ionització</strong>
+        i del <strong>potencial d’elèctrode estàndard</strong>.</li>
+    <li>Quan un metall entra en contacte amb el compost d’un altre,
+        pot tenir lloc una <strong>reacció de desplaçament simple</strong>.</li>
+    <li>Aquestes reaccions són <strong>reaccions redox</strong>:
+      <ul>
+        <li>un metall s’oxida (perd electrons),</li>
+        <li>l’altre es redueix (guanya electrons).</li>
+      </ul>
+    </li>
+    <li>Les reaccions poden ser <strong>espontànies</strong> o
+        <strong>no espontànies</strong> segons la reactivitat del metall.</li>
+    <li>A partir d’aquest comportament s’estableix una
+        <strong>sèrie de reactivitat dels metalls</strong>.</li>
+  </ul>
+
+  <h3>Relació amb la taula periòdica</h3>
+  <ul>
+    <li>La reactivitat dels metalls està relacionada amb la seva
+        <strong>posició a la taula periòdica</strong>.</li>
+    <li>Els metalls amb <strong>menor energia d’ionització</strong>
+        s’oxiden amb més facilitat i són més reactius.</li>
+    <li>Els <strong>potencials d’elèctrode estàndard</strong>
+        expliquen millor el comportament real dels metalls.</li>
+    <li>Això justifica que el <strong>zinc</strong> sigui més reductor
+        que el <strong>ferro</strong> i el <strong>coure</strong>,
+        tot i no estar més a l’esquerra de la taula.</li>
+  </ul>
+
+  <h3>Resultats observats</h3>
+  <ul>
+    <li>El <strong>zinc</strong> desplaça el ferro i el coure
+        de les seves sals → <strong>reaccions espontànies</strong>.</li>
+    <li>El <strong>ferro</strong> només desplaça el coure →
+        reacció espontània amb <strong>CuSO₄</strong>.</li>
+    <li>El <strong>coure</strong> no desplaça ni el zinc ni el ferro →
+        <strong>no hi ha reacció visible</strong>.</li>
+  </ul>
+
+  <p><strong>Sèrie de reactivitat obtinguda:</strong> Zn &gt; Fe &gt; Cu</p>
+
+  <h3>Conclusió</h3>
+  <ul>
+    <li>L’experiment confirma la <strong>teoria electroquímica</strong>.</li>
+    <li>El <strong>zinc</strong> és el metall més reactiu i el millor reductor.</li>
+    <li>El <strong>ferro</strong> presenta una reactivitat intermèdia.</li>
+    <li>El <strong>coure</strong> és el metall menys reactiu.</li>
+    <li>Aquesta sèrie està relacionada amb:
+      <ul>
+        <li>la facilitat per perdre electrons,</li>
+        <li>el caràcter metàl·lic,</li>
+        <li>els potencials de reducció.</li>
+      </ul>
+    </li>
+    <li>Té aplicacions pràctiques com el
+        <strong>galvanitzat</strong>, la <strong>corrosió</strong>
+        i el funcionament de <strong>piles i bateries</strong>.</li>
+  </ul>
+  <div class="media">
+  <figure>
+    <img 
+      src="oxidacio del ferro en coure.png" 
+      alt="Oxidació del ferro amb coure"
+      style="max-width: 350px; width: 100%; border-radius: 8px;"
+    >
+    <figcaption style="margin-top: 0.6rem; color: #374151; font-size: 0.9rem;">
+      <strong>Oxidació del ferro amb coure</strong><br>
+      El ferro s’oxida (perd electrons) i els ions Cu²⁺ es redueixen,
+      formant coure metàl·lic sobre el ferro.
+    </figcaption>
+  </figure>
+</div>
+</section>
+
+<section id="exp3">
+  <h2>3. Conductivitat de dissolucions</h2>
+  <h3>Fonaments Teòrics</h3>
+  <ul>
+    <li>La conductivitat elèctrica d’una dissolució depèn de la presència
+        d’<strong>ions lliures</strong> capaços de moure’s i transportar càrrega elèctrica.</li>
+    <li>Quan un <strong>compost iònic</strong> es dissol en aigua, es dissocia en
+        <strong>ions positius i negatius</strong>.</li>
+    <li>Aquests ions permeten el <strong>pas del corrent elèctric</strong> a través de la dissolució.</li>
+    <li>Els <strong>compostos covalents</strong> es dissolen en forma de molècules neutres
+        i <strong>no condueixen l’electricitat</strong>.</li>
+    <li>L’experiment permet diferenciar de manera pràctica
+        <strong>substàncies iòniques i covalents</strong>.</li>
+  </ul>
+
+  <h3>Relació amb la taula periòdica</h3>
+  <ul>
+    <li>Els compostos iònics solen estar formats per:
+      <ul>
+        <li><strong>Metalls</strong> (com el sodi o el calci), que tendeixen a perdre electrons.</li>
+        <li><strong>No-metalls</strong> (com el clor), que tendeixen a guanyar electrons.</li>
+      </ul>
+    </li>
+    <li>Aquesta diferència d’<strong>electronegativitat</strong> afavoreix la formació d’ions.</li>
+    <li>Els compostos formats només per no-metalls
+        (com la <strong>sacarosa</strong>, formada per C, H i O)
+        presenten <strong>enllaços covalents</strong>.</li>
+    <li>Aquests compostos no formen ions en dissolució aquosa.</li>
+  </ul>
+
+  <h3>Resultats observats</h3>
+  <ul>
+    <li><strong>Aigua destil·lada:</strong> el LED no s’encén → no condueix</li>
+    <li><strong>NaCl:</strong> La bombeta s’encén → alta conductivitat</li>
+    <li><strong>CaCl₂:</strong> La bombeta s’encén amb més intensitat → conductivitat molt alta</li>
+    <li><strong>Sacarosa:</strong> La bombeta roman apagada → conductivitat nul·la</li>
+  </ul>
+
+  <p>
+    Quan augmenta la concentració de <strong>NaCl</strong>, la intensitat de la bombeta també augmenta,
+    indicant que <strong>com més ions hi ha en dissolució, més gran és la conductivitat</strong>.
+  </p>
+
+  <h3>Conclusió</h3>
+  <ul>
+    <li>Només les dissolucions que contenen <strong>ions lliures</strong> poden conduir l’electricitat.</li>
+    <li>Les substàncies iòniques com el <strong>NaCl</strong> i el <strong>CaCl₂</strong>
+        són bones conductores en dissolució aquosa.</li>
+    <li>Els compostos covalents com la <strong>sacarosa</strong> no condueixen l’electricitat.</li>
+    <li>Els ions amb càrrega més gran, com el <strong>Ca²⁺</strong>,
+        produeixen una conductivitat més elevada.</li>
+    <li>La naturalesa de l’<strong>enllaç químic</strong> determina el comportament elèctric
+        de les substàncies.</li>
+  </ul>
+  <div class="media">
+
+  <figure style="max-width: 800px; margin: 0 auto 2rem;">
+    <img 
+      src="aigua destilada.jpeg" 
+      alt="Conductivitat de l’aigua destil·lada"
+      style="width: 100%; height: auto; border-radius: 12px;"
+    >
+    <figcaption>
+      <strong>Aigua destil·lada</strong><br>
+      La bombeta no s’encén perquè no hi ha ions lliures en dissolució.
+    </figcaption>
+  </figure>
+
+  <figure style="max-width: 800px; margin: 0 auto 2rem;">
+    <img 
+      src="sodi conduc.jpeg" 
+      alt="Conductivitat del clorur de sodi"
+      style="width: 100%; height: auto; border-radius: 12px;"
+    >
+    <figcaption>
+      <strong>NaCl (sodi)</strong><br>
+      La bombeta s’encén perquè el NaCl es dissocia en ions Na⁺ i Cl⁻.
+    </figcaption>
+  
+  </figure>
+    <figure style="max-width: 800px; margin: 0 auto 2rem;">
+    <img 
+      src="sodi conduc 2.jpeg" 
+      alt="Conductivitat del clorur de sodi"
+      style="width: 100%; height: auto; border-radius: 12px;"
+    >
+    <figcaption>
+      <strong>NaCl (sodi)</strong><br>
+      La bombeta s’encén amb més intensitat perquè hi ha més concentració de NaCl.
+    </figcaption>
+  </figure>
+
+  <figure style="max-width: 800px; margin: 0 auto;">
+    <img 
+      src="calci conduc.jpeg" 
+      alt="Conductivitat del clorur de calci"
+      style="width: 100%; height: auto; border-radius: 12px;"
+    >
+    <figcaption>
+      <strong>CaCl₂ (calci)</strong><br>
+      La bombeta s’encén amb més intensitat perquè forma més ions (Ca²⁺ + 2Cl⁻).
+    </figcaption>
+  </figure>
+
+</div>
+</section>
+
+<section id="exp4">
+  <h2>4. Reactivitat amb àcid i producció d’hidrogen</h2>
+ <h3>Fonaments Teòrics</h3>
+  <ul>
+    <li>Quan alguns metalls reaccionen amb <strong>àcids diluïts</strong>,
+        té lloc una <strong>reacció redox</strong>.</li>
+    <li>El <strong>metall s’oxida</strong> (perd electrons).</li>
+    <li>Els <strong>ions hidrogen (H⁺)</strong> es redueixen i formen
+        <strong>gas hidrogen (H₂)</strong>.</li>
+    <li>No tots els metalls reaccionen igual amb els àcids.</li>
+    <li>La reactivitat depèn de:
+      <ul>
+        <li>l’<strong>energia de ionització</strong>,</li>
+        <li>el <strong>potencial d’elèctrode</strong>,</li>
+        <li>el <strong>caràcter metàl·lic</strong>.</li>
+      </ul>
+    </li>
+    <li>En aquest experiment es compara el comportament de l’
+        <strong>alumini (Al)</strong>, el <strong>ferro (Fe)</strong>
+        i el <strong>coure (Cu)</strong> amb àcid clorhídric diluït.</li>
+  </ul>
+
+  <h3>Relació amb la taula periòdica</h3>
+  <ul>
+    <li>Els metalls amb <strong>més caràcter metàl·lic</strong>
+        reaccionen amb més facilitat amb els àcids.</li>
+    <li>Un <strong>potencial d’elèctrode més negatiu</strong>
+        indica una major tendència a oxidar-se.</li>
+    <li>L’<strong>alumini</strong>, tot i estar situat més a la dreta de la taula periòdica,
+        té una <strong>energia de ionització relativament baixa</strong>,
+        fet que el fa molt reactiu.</li>
+    <li>El <strong>ferro</strong> presenta una reactivitat intermèdia.</li>
+    <li>El <strong>coure</strong>, amb potencial d’elèctrode positiu,
+        és molt poc reactiu i <strong>no reacciona amb HCl diluït</strong>.</li>
+  </ul>
+
+  <h3>Resultats observats</h3>
+  <ul>
+    <li><strong>Alumini (Al):</strong>
+      apareixen bombolles després d’uns segons; la reacció s’accelera
+      quan es trenca la capa d’òxid → reacció intensa i espontània.</li>
+    <li><strong>Ferro (Fe):</strong>
+      formació lenta i escassa de bombolles → reacció feble però espontània. (no realitzat al laboratori)</li>
+    <li><strong>Coure (Cu):</strong>
+      no s’observen bombolles → no hi ha reacció.</li>
+  </ul>
+
+  <p><strong>Ordre de reactivitat observat:</strong> Al &gt; Fe &gt; Cu</p>
+
+  <h3>Conclusió</h3>
+  <ul>
+    <li>No tots els metalls reaccionen igual amb els <strong>àcids diluïts</strong>.</li>
+    <li>L’<strong>alumini</strong> és el més reactiu i produeix hidrogen
+        de manera intensa un cop superada la capa d’òxid.</li>
+    <li>El <strong>ferro</strong> reacciona lentament.</li>
+    <li>El <strong>coure</strong> no reacciona perquè el procés no és espontani.</li>
+    <li>Aquest comportament s’explica a partir de:
+      <ul>
+        <li>l’energia de ionització,</li>
+        <li>el potencial d’elèctrode,</li>
+        <li>la posició a la <strong>taula periòdica</strong>.</li>
+      </ul>
+    </li>
+  </ul>
+
+ <div class="media">
+
+  <figure style="max-width: 800px; margin: 0 auto;">
+    <video controls style="width: 100%; border-radius: 12px;">
+      <source src="produccio d'hidrogen.mp4" type="video/mp4">
+    </video>
+
+    <figcaption>
+      <strong>Producció d’hidrogen del ferro amb àcid</strong><br>
+      Comparació de la reacció del ferro amb àcid clorhídric de
+      <strong>diferent concentració</strong>.
+      Amb una concentració més alta d’àcid, la formació de bombolles
+      d’<strong>H₂</strong> és més ràpida i intensa.
+    </figcaption>
+  </figure>
+
+</div>
+</section>
+
+<section id="exp5">
+  <h2>5. Reactivitat dels halògens</h2>
+<h3>Fonaments Teòrics</h3>
+  <ul>
+    <li>Els <strong>halògens</strong> pertanyen al <strong>grup 17</strong> de la taula periòdica.</li>
+    <li>Tenen una gran tendència a <strong>guanyar electrons</strong>,
+        per tant actuen com a <strong>agents oxidants</strong>.</li>
+    <li>La seva capacitat oxidant <strong>disminueix en baixar pel grup</strong>.</li>
+    <li>Això passa perquè els electrons externs:
+      <ul>
+        <li>estan més allunyats del nucli,</li>
+        <li>són menys atrets per aquest.</li>
+      </ul>
+    </li>
+    <li>En l’experiment s’estudia si un halogen pot
+        <strong>desplaçar un altre del seu halur</strong>.</li>
+    <li>Un halogen més reactiu pot <strong>oxidar els ions halur</strong>
+        d’un halogen menys reactiu.</li>
+  </ul>
+
+  <h3>Relació amb la taula periòdica</h3>
+  <ul>
+    <li>Tots els halògens es troben al <strong>mateix grup (17)</strong>.</li>
+    <li>La seva reactivitat disminueix de dalt a baix:
+      <br><strong>Cl₂ &gt; Br₂ &gt; I₂</strong></li>
+    <li>Aquesta tendència està relacionada amb:
+      <ul>
+        <li>l’<strong>augment de la mida atòmica</strong>,</li>
+        <li>la <strong>disminució de l’afinitat electrònica</strong>,</li>
+        <li>els <strong>valors decreixents del potencial d’elèctrode estàndard</strong>.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Resultats observats</h3>
+  <ul>
+    <li><strong>Cl₂ + NaBr:</strong>
+      apareix color marró → formació de <strong>Br₂</strong> →
+      reacció espontània.</li>
+    <li><strong>Cl₂ + NaI:</strong>
+      color marró fosc o groguenc → formació de <strong>I₂</strong> →
+      reacció espontània.</li>
+    <li><strong>Br₂ + NaI:</strong>
+      no realitzada → <em>reacció espontània prevista</em>.</li>
+    <li><strong>Br₂ + NaCl:</strong>
+      cap canvi visible → reacció no espontània.</li>
+    <li><strong>I₂ + NaBr:</strong>
+      cap canvi visible → no hi ha reacció.</li>
+    <li><strong>I₂ + NaCl:</strong>
+      cap canvi visible → no hi ha reacció.</li>
+  </ul>
+
+  <p><strong>Ordre de reactivitat observat:</strong> Cl₂ &gt; Br₂ &gt; I₂</p>
+
+  <h3>Conclusió</h3>
+  <ul>
+    <li>Els halògens més reactius poden
+        <strong>desplaçar els menys reactius</strong> dels seus compostos.</li>
+    <li>El <strong>clor</strong> és el millor oxidant dels tres.</li>
+    <li>El clor pot oxidar <strong>bromurs i iodurs</strong>.</li>
+    <li>El <strong>brom</strong> només pot oxidar <strong>iodurs</strong>.</li>
+    <li>El <strong>iode</strong> no pot desplaçar cap altre halur.</li>
+    <li>Aquest comportament s’explica per la
+        <strong>posició a la taula periòdica</strong> i
+        els <strong>potencials d’elèctrode estàndard</strong>.</li>
+  </ul>
+
+  <div class="media">
+
+  <figure style="max-width: 800px; margin: 0 auto 2.5rem;">
+    <video controls style="width: 100%; border-radius: 12px;">
+      <source src="Formacio de brom.mp4" type="video/mp4">
+      El teu navegador no suporta vídeos HTML5.
+    </video>
+
+    <figcaption>
+      <strong>Formació de brom (Br₂)</strong><br>
+      El clor, més reactiu, oxida els ions bromur (Br⁻),
+      formant brom molecular (Br₂), que dona un color marró a la dissolució.
+    </figcaption>
+  </figure>
+
+  <figure style="max-width: 800px; margin: 0 auto;">
+    <video controls style="width: 100%; border-radius: 12px;">
+      <source src="Formacio de iode.mp4" type="video/mp4">
+      El teu navegador no suporta vídeos HTML5.
+    </video>
+
+    <figcaption>
+      <strong>Formació de iode (I₂)</strong><br>
+      El clor oxida els ions iodur (I⁻),
+      formant iode molecular (I₂), observable com un colorgroguenc vermellós.
+    </figcaption>
+  </figure>
+
+</div>
+</section>
+
+<section id="exp6">
+  <h2>6. Solubilitat dels carbonats</h2>
+<h3>Fonaments Teòrics</h3>
+  <ul>
+    <li>Els <strong>carbonats dels metalls alcalinoterris</strong>
+        pertanyents al <strong>grup 2</strong> presenten diferent
+        <strong>solubilitat en aigua</strong>.</li>
+    <li>Quan un carbonat és <strong>poc soluble</strong>,
+        es forma un <strong>precipitat sòlid</strong>
+        en barrejar una dissolució amb ions carbonat
+        i una dissolució amb el catió metàl·lic.</li>
+    <li>A mesura que es baixa pel <strong>grup 2</strong>
+        de la taula periòdica,
+        la <strong>solubilitat dels carbonats disminueix</strong>.</li>
+    <li>Això provoca una <strong>precipitació cada cop més intensa</strong>.</li>
+  </ul>
+
+  <h3>Relació amb la taula periòdica</h3>
+  <ul>
+    <li>Els ions del <strong>grup 2</strong> tenen la mateixa
+        <strong>càrrega (+2)</strong>.</li>
+    <li>La seva <strong>mida iònica augmenta</strong>
+        en baixar pel grup.</li>
+    <li>Els ions més petits, com el <strong>Mg²⁺</strong>:
+      <ul>
+        <li>s’hidraten millor,</li>
+        <li>romanen en dissolució.</li>
+      </ul>
+    </li>
+    <li>Els ions més grans, com el <strong>Ca²⁺</strong> i sobretot el <strong>Ba²⁺</strong>:
+      <ul>
+        <li>formen carbonats molt poc solubles,</li>
+        <li>afavoreixen la formació de precipitats sòlids.</li>
+      </ul>
+    </li>
+    <li>Aquest comportament està relacionat amb:
+      <ul>
+        <li>l’<strong>energia d’hidratació</strong>,</li>
+        <li>l’<strong>estabilitat de la xarxa sòlida</strong> del precipitat.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Resultats observats</h3>
+  <ul>
+    <li><strong>MgCO₃:</strong>
+      no s’observa precipitat apreciable →
+      carbonat relativament soluble.</li>
+    <li><strong>CaCO₃:</strong>
+      es forma un precipitat blanc visible →
+      solubilitat baixa.</li>
+    <li><strong>BaCO₃:</strong>
+      no realitzat → es preveu un precipitat blanc molt abundant →
+      carbonat gairebé insoluble.</li>
+  </ul>
+
+  <p><strong>Ordre de solubilitat (de més a menys soluble):</strong>
+     MgCO₃ &gt; CaCO₃ &gt; BaCO₃</p>
+
+  <h3>Conclusió</h3>
+  <ul>
+    <li>La solubilitat dels <strong>carbonats</strong>
+        disminueix en baixar pel <strong>grup 2</strong>
+        de la taula periòdica.</li>
+    <li>El <strong>magnesi</strong> forma el carbonat més soluble.</li>
+    <li>El <strong>calci</strong> presenta una solubilitat baixa.</li>
+    <li>El <strong>bari</strong> forma un carbonat pràcticament insoluble.</li>
+    <li>Aquest comportament s’explica per:
+      <ul>
+        <li>la variació de l’<strong>energia d’hidratació</strong> dels ions,</li>
+        <li>la major <strong>estabilitat de la xarxa sòlida</strong>
+            en els ions més grans.</li>
+      </ul>
+    </li>
+  </ul>
+  <div class="media">
+
+  <figure style="max-width: 800px; margin: 0 auto 2.5rem;">
+    <video controls style="width: 100%; border-radius: 12px;">
+      <source src="precipitat de magnesi.mp4" type="video/mp4">
+      El teu navegador no suporta vídeos HTML5.
+    </video>
+
+    <figcaption>
+      <strong>Carbonat de magnesi (MgCO₃)</strong><br>
+      No s’observa precipitat visible perquè el carbonat de magnesi
+      és relativament soluble en aigua.
+    </figcaption>
+  </figure>
+
+  <figure style="max-width: 800px; margin: 0 auto;">
+    <video controls style="width: 100%; border-radius: 12px;">
+      <source src="precipitat de calci.mp4" type="video/mp4">
+      El teu navegador no suporta vídeos HTML5.
+    </video>
+
+    <figcaption>
+      <strong>Carbonat de calci (CaCO₃)</strong><br>
+      Es forma un precipitat blanc visible perquè el carbonat de calci
+      té una solubilitat baixa en aigua.
+    </figcaption>
+  </figure>
+
+</div>
+</section>
+</script>
+<a href="taula 1.html" target="_blank">
+  Taula peroiòdica
+</a> 
+</body>
+</html>
